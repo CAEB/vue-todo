@@ -8,7 +8,7 @@
             </transition>
         </div>
         <div class="todos">
-            <div class="todo" v-for="(todo, index) of todos" :key="index">
+            <div class="todo" v-for="(todo, index) of todos" :key="index" @touchstart="showHandler(index)">
                 <el-checkbox v-model="todo.checked">{{todo.todo}}</el-checkbox>
                 <div class="i" v-if="todo.showHandler">
                     <i class="el-icon-edit"></i>
@@ -38,6 +38,10 @@ export default {
           }
           this.todos.push(obj)
           this.todo = ''
+      },
+      showHandler (index) {
+          console.log(123)
+          this.todos[index].showHandler = true
       }
   },
   created() {
