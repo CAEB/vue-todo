@@ -1,8 +1,9 @@
 const webpack = require('webpack')
+const ParallelUglifyPlugin = require('webpack-parallel-uglify-plugin')
 
 module.exports = {
     mode: process.env.NODE_ENV,
-    devtool: "eval-source-map",
+    /* devtool: "eval-source-map", */
     entry: __dirname + "/src/index.js",
     output: {
         filename: "index.js",
@@ -77,10 +78,15 @@ if (process.env.NODE_ENV === 'production') {
                 NODE_ENV: '"production"'
             }
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            //  sourceMap: true,
-            compress: {
+        new ParallelUglifyPlugin({
+            cacheDir: '.cache/',
+            uglifyJS:{
+              output: {
+                comments: false
+              },
+              compress: {
                 warnings: false
+              }
             }
         }),
         new webpack.LoaderOptionsPlugin({
